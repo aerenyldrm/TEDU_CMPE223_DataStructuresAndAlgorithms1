@@ -1,0 +1,111 @@
+class Node
+{
+    private int element;
+    private Node next;
+    
+    Node(int element, Node next)
+    {
+        this.element = element;
+        this.next = next;
+    }
+    
+    public int getElement() { return this.element; }
+    public Node getNext() { return this.next; }
+    
+    public void setElement(int element) { this.element = element; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    private long size;
+    
+    SLinkedList(Node head, long size)
+    {
+        this.head = head;
+        this.size = size;
+    }
+    
+    public Node getHead() { return this.head; }
+    public long getSize() { return this.size; }
+    
+    public void setHead(Node head) { this.head = head; }
+    public void setSize(long size) { this.size = size; }
+    
+    public void rotateRight()
+    {
+        if(this.head == null)
+        {
+            throw new IllegalStateException("Single linked list is empty.");
+        }
+        else if(this.head.getNext() == null)
+        {
+            throw new IllegalStateException("Single linked list is with 1 node. It's not logical to utilize function.");
+        }
+        
+        Node current = this.head;
+        
+        for(int counter = 0; counter < this.size - 2; counter++)
+        {
+            current = current.getNext();
+        }
+        
+        current.getNext().setNext(this.head);
+        this.head = current.getNext();
+        current.setNext(null);
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {
+        Node n5 = new Node(5, null); // test with single linked list of 5 nodes
+        Node n4 = new Node(4, n5);
+        Node n3 = new Node(3, n4);
+        Node n2 = new Node(2, n3);
+        Node n1 = new Node(1, n2);
+        SLinkedList list1 = new SLinkedList(n1, 5);
+        printSLinkedList(list1);
+        list1.rotateRight();
+        printSLinkedList(list1);
+
+        Node a2 = new Node(2, null); // test with single linked list of 2 nodes
+        Node a1 = new Node(1, a2);
+        SLinkedList list2 = new SLinkedList(a1, 2);
+        printSLinkedList(list2);
+        list2.rotateRight();
+        printSLinkedList(list2);
+
+        Node single = new Node(1, null); // test with single linked list of 1 nodes
+        SLinkedList list3 = new SLinkedList(single, 1);
+        printSLinkedList(list3);
+        list3.rotateRight();
+        printSLinkedList(list3);
+
+        SLinkedList list4 = new SLinkedList(null, 0); // test with single linked list that is empty
+        printSLinkedList(list4);
+        list4.rotateRight();
+        printSLinkedList(list4);
+    }
+
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getElement());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
