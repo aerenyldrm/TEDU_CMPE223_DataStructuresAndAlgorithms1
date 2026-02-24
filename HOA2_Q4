@@ -1,0 +1,189 @@
+class DNode
+{
+    private int element;
+    private DNode previous, next;
+    
+    DNode(int element, DNode previous, DNode next)
+    {
+        this.element = element;
+        this.previous = previous;
+        this.next = next;
+    }
+    
+    public int getElement() { return this.element; }
+    public DNode getPrevious() { return this.previous; }
+    public DNode getNext() { return this.next; }
+    
+    public void setElement(int element) { this.element = element; }
+    public void setPrevious(DNode previous) { this.previous = previous; }
+    public void setNext(DNode next) { this.next = next; }
+}
+
+class DList
+{
+    private DNode head, tail;
+    private int size;
+    
+    DList(DNode head, DNode tail, int size)
+    {
+        this.head = head;
+        this.tail = tail;
+        this.size = size;
+    }
+    
+    public DNode getHead() { return this.head; }
+    public DNode getTail() { return this.tail; }
+    public int getSize() { return this.size; }
+    
+    public void setHead(DNode head) { this.head = head; }
+    public void setTail(DNode tail) { this.tail = tail; }
+    public void setSize(int size) { this.size = size; }
+    
+    public void remove(DNode n)
+    {
+        if(this.head == null)
+        {
+            throw new IllegalStateException("Single linked list is empty.");
+        }
+        
+        if(this.tail == n)
+        {
+            this.tail = n.getPrevious();
+            n.getPrevious().setNext(null);
+            n.setPrevious(null);
+        }
+        else if(this.head == n)
+        {
+            this.head = n.getNext();
+            n.getNext().setPrevious(null);
+            n.setNext(null);
+        }
+        else
+        {
+            n.getPrevious().setNext(n.getNext());
+            n.getNext().setPrevious(n.getPrevious());
+            n.setNext(null);
+            n.setPrevious(null);
+        }
+    }
+    
+    public DNode search(int k)
+    {
+        if(this.head == null)
+        {
+            throw new IllegalStateException("Double linked list is empty.");
+        }
+        
+        DNode current = this.head;
+        
+        while(current != null)
+        {
+            if(current.getElement() == k)
+            {
+                return current;
+            }
+            
+            current = current.getNext();
+        }
+        
+        return current;
+    }
+    
+    public DNode removeLast()
+    {
+        if(this.head == null)
+        {
+            throw new IllegalStateException("Double linked list is empty.");
+        }
+        
+        this.tail.getPrevious().setNext(null);
+        DNode oldTail = this.tail;
+        oldTail.setPrevious(null);
+        return oldTail;
+    }
+}
+
+public class Main 
+{
+    public static void main(String[] args)
+    {
+        // test for remove
+        DNode d5 = new DNode(5, null, null); // remove an in-between node
+        DNode d4 = new DNode(4, null, d5);
+        DNode d3 = new DNode(3, null, d4);
+        DNode d2 = new DNode(2, null, d3);
+        DNode d1 = new DNode(1, null, d2);
+        d2.setPrevious(d1);
+        d3.setPrevious(d2);
+        d4.setPrevious(d3);
+        d5.setPrevious(d4);
+        DList list1 = new DList(d1, d5, 5);
+        printDList(list1);
+        list1.remove(d3);
+        printDList(list1);
+        
+        DNode a3 = new DNode(3, null, null); // remove head
+        DNode a2 = new DNode(2, null, a3);
+        DNode a1 = new DNode(1, null, a2);
+        a2.setPrevious(a1);
+        a3.setPrevious(a2);
+        DList list2 = new DList(a1, a3, 3);
+        printDList(list2);
+        list2.remove(a1);
+        printDList(list2);
+        
+        DNode b3 = new DNode(7, null, null); // remove tail
+        DNode b2 = new DNode(6, null, b3);
+        DNode b1 = new DNode(5, null, b2);
+        b2.setPrevious(b1);
+        b3.setPrevious(b2);
+        DList list3 = new DList(b1, b3, 3);
+        printDList(list3);
+        list3.remove(b3);
+        printDList(list3);
+        
+        // test for search
+        DNode c4 = new DNode(4, null, null);
+        DNode c3 = new DNode(3, null, c4);
+        DNode c2 = new DNode(2, null, c3);
+        DNode c1 = new DNode(1, null, c2);
+        c2.setPrevious(c1);
+        c3.setPrevious(c2);
+        c4.setPrevious(c3);
+        DList list4 = new DList(c1, c4, 4);
+        System.out.println(list4.search(4));
+        
+        System.out.println(list4.search(99));
+        
+        // test for removeLast
+        DNode e3 = new DNode(3, null, null);
+        DNode e2 = new DNode(2, null, e3);
+        DNode e1 = new DNode(1, null, e2);
+        e2.setPrevious(e1);
+        e3.setPrevious(e2);
+        DList list5 = new DList(e1, e3, 3);
+        printDList(list5);
+        System.out.println(list5.removeLast());
+        printDList(list5);
+    }
+    
+    public static void printDList(DList list)
+    {
+        DNode current = list.getHead();
+        
+        while (current != null)
+        {
+            System.out.print(current.getElement());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" <-> ");
+            }
+            
+            current = current.getNext();
+        }
+        
+        System.out.println();
+    }
+}
+
