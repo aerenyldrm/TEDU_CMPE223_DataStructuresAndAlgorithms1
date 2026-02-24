@@ -1,0 +1,134 @@
+class Node
+{
+    private int element;
+    private Node next;
+    
+    Node(int element, Node next)
+    {
+        this.element = element;
+        this.next = next;
+    }
+    
+    public int getElement() { return this.element; }
+    public Node getNext() { return this.next; }
+    
+    public void setElement(int element) { this.element = element; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    private long size;
+    
+    SLinkedList(Node head, long size)
+    {
+        this.head = head;
+        this.size = size;
+    }
+    
+    public Node getHead() { return this.head; }
+    public long getSize() { return this.size; }
+    
+    public void setHead(Node head) { this.head = head; }
+    public void setSize(long size) { this.size = size; }
+    
+    public void swapPairs()
+    {
+        if (this.head == null || this.head.getNext() == null)
+        {
+            throw new IllegalStateException("Single linked list is empty or with size 1. So, no point to utilize this function.");
+        }
+        
+        Node current = this.head;
+        this.head = this.head.getNext();
+        
+        while(current.getNext() != null && current.getNext().getNext() != null)
+        {
+            Node oldNext = current.getNext();
+            Node oldNextOfNext = current.getNext().getNext();
+            Node oldNextOfNextOfNext = current.getNext().getNext().getNext();
+            
+            current.getNext().setNext(current);
+            
+            if (oldNextOfNextOfNext == null)
+            {
+                current.setNext(oldNextOfNext);
+            }
+            else
+            {
+                current.setNext(oldNextOfNextOfNext);
+            }
+            
+            current = oldNextOfNext;
+        }
+        
+        if(current.getNext() != null)
+        {
+            current.getNext().setNext(current);
+            current.setNext(null);
+        }
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {
+        Node n9 = new Node(9, null);
+        Node n8 = new Node(8, n9);
+        Node n7 = new Node(7, n8);
+        Node n6 = new Node(6, n7);
+        Node n5 = new Node(5, n6);
+        Node n4 = new Node(4, n5);
+        Node n3 = new Node(3, n4);
+        Node n2 = new Node(2, n3);
+        Node n1 = new Node(1, n2);
+        
+        SLinkedList list1 = new SLinkedList(n1, 9);
+        printSLinkedList(list1);
+        list1.swapPairs(); // test case with single linked list with size 9 i.e., odd size
+        printSLinkedList(list1);
+        
+        Node a8 = new Node(8, null);
+        Node a7 = new Node(7, a8);
+        Node a6 = new Node(6, a7);
+        Node a5 = new Node(5, a6);
+        Node a4 = new Node(4, a5);
+        Node a3 = new Node(3, a4);
+        Node a2 = new Node(2, a3);
+        Node a1 = new Node(1, a2);
+        
+        SLinkedList list2 = new SLinkedList(a1, 8);
+        printSLinkedList(list2);
+        list2.swapPairs(); // test case with single linked list with size 8 i.e., even size
+        printSLinkedList(list2);
+        
+        Node b2 = new Node(2, null);
+        Node b1 = new Node(1, b2);
+        
+        SLinkedList list3 = new SLinkedList(b1, 2);
+        printSLinkedList(list3);
+        list3.swapPairs(); // test case with single linked list with size 2 i.e., minimum size
+        printSLinkedList(list3);
+    }
+
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getElement());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
