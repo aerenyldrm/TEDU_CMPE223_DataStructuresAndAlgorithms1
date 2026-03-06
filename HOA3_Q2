@@ -1,0 +1,133 @@
+class Node
+{
+    private String item;
+    private Node next;
+    
+    Node(String item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public String getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(String item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class LinkedQueueOfStrings // first in first out
+{
+    private Node first;
+    private Node last;
+    
+    LinkedQueueOfStrings(Node first, Node last)
+    {
+        this.first = first;
+        this.last = last;
+    }
+    
+    public Node getFirst() { return first; }
+    public Node getLast() { return last; }
+    
+    public void setFirst(Node first) { this.first = first; }
+    public void setLast(Node last) { this.last = last; }
+    
+    public boolean isEmpty() { return first == null; }
+    
+    public void enqueue(String item) // add to back of queue
+    {
+        Node oldLast = this.last;
+        Node newLast = new Node(item, null);
+        
+        if(isEmpty())
+        {
+            this.first = newLast;
+        }
+        else
+        {
+            oldLast.setNext(newLast);
+        }
+        
+        this.last = newLast;
+    }
+    
+    public String dequeue() // remove from front of queue
+    {
+        Node oldFirst = this.first;
+        Node newFirst = oldFirst.getNext();
+        oldFirst.setNext(null);
+        this.first = newFirst;
+        
+        return oldFirst.getItem();
+    }
+ }
+
+class SLinkedList
+{
+    private Node head;
+    
+    SLinkedList(Node head)
+    {
+        this.head = head;
+    }
+    
+    public Node getHead() { return this.head; }
+    
+    public void setHead(Node head) { this.head = head; }
+    
+    public void moveContents(LinkedQueueOfStrings q)
+    {
+        Node current = this.head;
+        
+        while(current != null)
+        {
+            q.enqueue(current.getItem());
+            Node newCurrent = current.getNext();
+            this.head = newCurrent;
+            current.setNext(null);
+            
+            current = newCurrent;
+        }
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {
+        Node n7 = new Node("7", null);
+        Node n6 = new Node("6", n7);
+        Node n5 = new Node("5", n6);
+        Node n4 = new Node("4", n5);
+        Node n3 = new Node("3", n4);
+        Node n2 = new Node("2", n3);
+        Node n1 = new Node("1", n2);
+        
+        SLinkedList list1 = new SLinkedList(n1);
+        printSLinkedList(list1);
+        LinkedQueueOfStrings q = new LinkedQueueOfStrings(null, null);
+        list1.moveContents(q);
+        printSLinkedList(list1);
+        System.out.println(q.dequeue());
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
