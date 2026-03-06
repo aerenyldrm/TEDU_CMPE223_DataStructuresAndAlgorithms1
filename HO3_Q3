@@ -1,0 +1,133 @@
+class Node
+{
+    private int item;
+    private Node next;
+    
+    Node(int item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public int getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(int item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    private long size;
+    
+    SLinkedList(Node head, long size)
+    {
+        this.head = head;
+        this.size = size;
+    }
+    
+    public Node getHead() { return this.head; }
+    public long getSize() { return this.size; }
+    
+    public void setHead(Node head) { this.head = head; }
+    public void setSize(long size) { this.size = size; }
+    
+    /*
+    LOW LEVEL PSEUDOCODE
+    discriminate inappropriate possibilities such as size with 0 or 1 for single linked lists
+    if size is even
+        while current is not null
+            remove next of current from linked list
+            decrease size by 1
+            update current with updated next
+    else i.e., size is odd
+        while next of current is not null
+            remove next of current from linked list
+            decrease size by 1
+            update current with updated next
+    */
+    
+    public static void removeEvery2ndNode(SLinkedList input)
+    {        
+        if(input.getSize() <= 1)
+        {
+            throw new IllegalStateException("Linked list is empty or with 1 node only, so it is illogical to utilize this function.");
+        }
+        
+        Node current = input.getHead();
+        
+        if(input.getSize() % 2 == 0)
+        {
+            while(current != null)
+            {
+                Node next = current.getNext();
+                current.setNext(current.getNext().getNext());
+                next.setNext(null);
+                
+                input.setSize(input.getSize() - 1);
+                
+                current = current.getNext();
+            }
+        }
+        else
+        {
+            while(current.getNext() != null)
+            {
+                Node next = current.getNext();
+                current.setNext(current.getNext().getNext());
+                next.setNext(null);
+                
+                input.setSize(input.getSize() - 1);
+                
+                current = current.getNext();
+            }
+        }
+    }
+}
+
+public class Main 
+{    
+    public static void main()
+    {
+        Node n5 = new Node(5, null); // test with single linked list of 5 nodes i.e., with odd size
+        Node n4 = new Node(4, n5);
+        Node n3 = new Node(3, n4);
+        Node n2 = new Node(2, n3);
+        Node n1 = new Node(1, n2);
+        SLinkedList list1 = new SLinkedList(n1, 5);
+        printSLinkedList(list1);
+        SLinkedList.removeEvery2ndNode(list1);
+        printSLinkedList(list1);
+        
+        Node a6 = new Node(6, null); // test with single linked list of 5 nodes i.e., with odd size
+        Node a5 = new Node(5, a6);        
+        Node a4 = new Node(4, a5);
+        Node a3 = new Node(3, a4);
+        Node a2 = new Node(2, a3);
+        Node a1 = new Node(1, a2);
+        SLinkedList list2 = new SLinkedList(a1, 6);
+        printSLinkedList(list2);
+        SLinkedList.removeEvery2ndNode(list2);
+        printSLinkedList(list2);
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
