@@ -1,0 +1,95 @@
+
+class LinkedStackOfStrings
+{
+    private Node first;
+    
+    LinkedStackOfStrings(Node first)
+    {
+        this.first = first;
+    }
+    
+    public Node getFirst() { return this.first; }
+    
+    public void setFirst(Node first) { this.first = first; }
+    
+    private class Node
+    {
+        String item;
+        Node next;
+    }
+    
+    public boolean isEmpty()
+    {
+        return this.first == null;
+    }
+    
+    public void push(String item)
+    {
+        Node oldFirst = this.first;
+        Node newFirst = new Node();
+        newFirst.item = item;
+        newFirst.next = oldFirst;
+    }
+    
+    public String pop()
+    {
+        String item = this.first.item;
+        this.first = this.first.next;
+        
+        return item;
+    }
+}
+
+class FixedCapacityStackOfStrings
+{
+    private String[] s;
+    private int n = 0;
+    
+    FixedCapacityStackOfStrings(int capacity)
+    {
+        s = new String[capacity];
+    }
+    
+    public boolean isEmpty()
+    {
+        return n == 0;
+    }
+    
+    public void push(String item)
+    {
+        s[n++] = item;
+    }
+    
+    public String pop()
+    {
+        return s[--n];
+    }
+    
+    public static String reverse(String string)
+    {
+        int capacity = string.length();
+        FixedCapacityStackOfStrings fixedCapacityStackOfStrings = new FixedCapacityStackOfStrings(capacity);
+        
+        for(int counter = 0; counter < capacity; counter++)
+        {
+            fixedCapacityStackOfStrings.push(Character.toString(string.charAt(counter)));
+        }
+        
+        String theReverse = "";
+        
+        while(!fixedCapacityStackOfStrings.isEmpty())
+        {
+            theReverse += fixedCapacityStackOfStrings.pop();
+        }
+        
+        return theReverse;
+    }
+}
+
+public class Main 
+{    
+    public static void main()
+    {
+        System.out.println(FixedCapacityStackOfStrings.reverse("GeeksQuiz"));
+    }
+}
