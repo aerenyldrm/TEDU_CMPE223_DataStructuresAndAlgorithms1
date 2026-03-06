@@ -1,0 +1,150 @@
+class Node
+{
+    private int item;
+    private Node next;
+    
+    Node(int item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public int getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(int item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    
+    SLinkedList(Node head)
+    {
+        this.head = head;
+    }
+    
+    public Node getHead() { return this.head; }
+    
+    public void setHead(Node head) { this.head = head; }
+    
+    public static boolean areIdentical(SLinkedList list1, SLinkedList list2)
+    {   
+        Node current1 = list1.getHead();
+        Node current2 = list2.getHead();
+        int counter1 = 0;
+        int counter2 = 0;
+
+        while(current1 != null || current2 != null)
+        {
+            if(current1.getNext() != null)
+            {
+                counter1++;
+            }
+            
+            if(current2.getNext() != null)
+            {
+                counter2++;
+            }
+            
+            if(counter1 != counter2)
+            {
+                return false; // size is different so not identical
+            }
+            
+            current1 = current1.getNext();
+            current2 = current2.getNext();
+        }
+        
+        Node dummyHead1 = new Node(Integer.MIN_VALUE, list1.getHead());
+        Node dummyHead2 = new Node(Integer.MIN_VALUE, list2.getHead());
+        list1.setHead(dummyHead1);
+        list2.setHead(dummyHead2);
+        current1 = dummyHead1;
+        current2 = dummyHead2;
+        
+        while(current1.getNext() != null)
+        {
+            int otherCounter2 = 0;
+            
+            while(current2.getNext() != null)
+            {
+                if(current1.getNext().getItem() == current2.getNext().getItem())
+                {
+                    Node nextOfNext2 = current2.getNext().getNext();
+                    current2.getNext().setNext(null);
+                    current2.setNext(nextOfNext2);
+                    
+                    counter2--;
+                    
+                    current2 = dummyHead2;
+                    
+                    break;
+                }
+                
+                otherCounter2++;
+                current2 = current2.getNext();
+            }
+            
+            if (counter2 == otherCounter2 && counter2 != 0)
+            {
+                return false; // not possible to detect an equality for an item for current1.getNext().getItem()...
+            }
+            
+            current2 = dummyHead2;
+            current1 = current1.getNext();
+        }
+        
+        return true;
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {        
+        Node n7 = new Node(7, null);
+        Node n6 = new Node(6, n7);
+        Node n5 = new Node(5, n6);
+        Node n4 = new Node(4, n5);
+        Node n3 = new Node(3, n4);
+        Node n2 = new Node(2, n3);
+        Node n1 = new Node(1, n2);
+        
+        SLinkedList list1 = new SLinkedList(n1);
+        printSLinkedList(list1);
+    
+        Node a7 = new Node(7, null);
+        Node a6 = new Node(6, a7);
+        Node a5 = new Node(5, a6);
+        Node a4 = new Node(4, a5);
+        Node a3 = new Node(2, a4);
+        Node a2 = new Node(1, a3);
+        Node a1 = new Node(3, a2);
+        
+        SLinkedList list2 = new SLinkedList(a1);
+        printSLinkedList(list2);
+        
+        System.out.println(SLinkedList.areIdentical(list1, list2));
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
