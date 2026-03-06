@@ -1,0 +1,92 @@
+class SLinkedListQueue
+{
+    private Node head = null;
+    private Node tail = null;
+    private int n = 0;
+    
+    SLinkedListQueue(int n)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            enqueue(i);
+        }
+    }
+
+    private class Node
+    {
+        int item;
+        Node next;
+    }
+
+    public boolean isEmpty()
+    {
+        return n == 0;
+    }
+
+    public int size()
+    {
+        return n;
+    }
+
+    public void enqueue(int item)
+    {
+        Node newNode = new Node();
+        newNode.item = item;
+        newNode.next = null;
+
+        if(isEmpty())
+            head = newNode;
+        else
+            tail.next = newNode;
+
+        tail = newNode;
+        n++;
+    }
+
+    public int dequeue()
+    {
+        int item = head.item;
+        head = head.next;
+        if(isEmpty()) tail = null;
+        n--;
+        return item;
+    }
+
+    public int front()
+    {
+        return head.item;
+    }
+    
+    public static int josephus(int n, int k)
+    {
+        SLinkedListQueue queue = new SLinkedListQueue(n);
+        int counter = 0;
+        Node current = queue.head;
+        
+        while(current.next != null)
+        {
+            counter++;
+            
+            if(counter % k == 0)
+            {
+                queue.dequeue();
+            }
+            else
+            {
+                queue.enqueue(current.item);
+            }
+            
+            current = current.next;
+        }
+        
+        return current.item;
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        System.out.println(SLinkedListQueue.josephus(7, 2));
+    }
+}
