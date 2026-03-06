@@ -1,0 +1,85 @@
+class FixedCapacityStackOfStrings
+{
+    private String[] s;
+    private int n = 0;
+    
+    FixedCapacityStackOfStrings(int capacity)
+    {
+        s = new String[capacity];
+    }
+    
+    public boolean isEmpty()
+    {
+        return n == 0;
+    }
+    
+    public void push(String item)
+    {
+        s[n++] = item;
+    }
+    
+    public String pop()
+    {
+        return s[--n];
+    }
+    
+    public static boolean isValid(String s)
+    {
+        int capacity = s.length();
+        FixedCapacityStackOfStrings fixedCapacityStackOfStrings = new FixedCapacityStackOfStrings(capacity);
+        
+        for(int counter = 0; counter < capacity; counter++)
+        {
+            char charAtIndex = s.charAt(counter);
+            
+            if(charAtIndex == '(' || charAtIndex == '[' || charAtIndex == '{')
+            {
+                fixedCapacityStackOfStrings.push(Character.toString(charAtIndex));
+            }
+            else
+            {
+                String sPop = fixedCapacityStackOfStrings.pop();
+                String stringFromChar = Character.toString(charAtIndex);
+                
+                if(sPop.equals("("))
+                {
+                    if(!stringFromChar.equals(")"))
+                    {
+                        return false;
+                    }
+                }
+                else if(sPop.equals("["))
+                {
+                    if(!stringFromChar.equals("]"))
+                    {
+                        return false;
+                    }   
+                }
+                else
+                {
+                    if(!stringFromChar.equals("}"))
+                    {
+                        return false;
+                    }                   
+                }
+            }
+        }
+        
+        if (!fixedCapacityStackOfStrings.isEmpty())
+        {
+            return false;
+        }
+        
+        return true;
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        System.out.println(FixedCapacityStackOfStrings.isValid("()[]{}"));
+        System.out.println(FixedCapacityStackOfStrings.isValid("([)]"));
+        System.out.println(FixedCapacityStackOfStrings.isValid("{[]}"));
+    }
+}
