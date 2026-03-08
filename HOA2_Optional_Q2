@@ -1,0 +1,95 @@
+class Node
+{
+    private int item;
+    private Node next;
+    
+    Node(int item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public int getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(int item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    
+    SLinkedList(Node head)
+    {
+        this.head = head;
+    }
+    
+    public Node getHead() { return this.head; }
+    
+    public void setHead(Node head) { this.head = head; }
+    
+    /*
+    LOW LEVEL PSEUDOCODE
+    current is this head
+    while current is not null and next of current is not null
+        while next of current is not null item of current node is equal to item of next of current node
+            remove next of current node
+        assign next of current to current
+    */
+    
+    public void removeDuplicates()
+    {
+        Node current = this.head;
+        
+        while(current != null && current.getNext() != null)
+        {
+            while(current.getNext() != null && current.getItem() == current.getNext().getItem())
+            {
+                Node oldNext = current.getNext();
+                current.setNext(current.getNext().getNext());
+                oldNext.setNext(null);
+            }
+            
+            current = current.getNext();
+        }
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {        
+        Node n7 = new Node(6, null);
+        Node n6 = new Node(6, n7);
+        Node n5 = new Node(6, n6);
+        Node n4 = new Node(3, n5);
+        Node n3 = new Node(3, n4);
+        Node n2 = new Node(3, n3);
+        Node n1 = new Node(1, n2);
+        
+        SLinkedList list1 = new SLinkedList(n1);
+        printSLinkedList(list1);
+        list1.removeDuplicates();
+        printSLinkedList(list1);
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
