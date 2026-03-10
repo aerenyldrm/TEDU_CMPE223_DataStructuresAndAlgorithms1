@@ -1,0 +1,87 @@
+class Node
+{
+    private int item;
+    private Node next;
+    
+    Node(int item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public int getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(int item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    
+    SLinkedList(Node head)
+    {
+        this.head = head;
+    }
+    
+    public Node getHead() { return this.head; }
+    
+    public void setHead(Node head) { this.head = head; }
+    
+    /*
+    LOW LEVEL PSEUDOCODE
+    assign current as single linked list's head
+    while next of current is not null
+        assign next of current as head of this single linked list
+    */
+    
+    public void reverse()
+    {
+        Node current = this.head;
+        
+        while(current.getNext() != null)
+        {
+            Node next = current.getNext();
+            current.setNext(next.getNext());
+            next.setNext(this.head);
+            this.head = next;
+        }
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {        
+        Node n5 = new Node(10, null);
+        Node n4 = new Node(9, n5);
+        Node n3 = new Node(7, n4);
+        Node n2 = new Node(5, n3);
+        Node n1 = new Node(1, n2);
+        
+        SLinkedList list1 = new SLinkedList(n1);
+        printSLinkedList(list1);
+        list1.reverse();
+        printSLinkedList(list1);
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
