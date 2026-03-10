@@ -1,0 +1,137 @@
+class Node
+{
+    private int item;
+    private Node next;
+    
+    Node(int item, Node next)
+    {
+        this.item = item;
+        this.next = next;
+    }
+    
+    public int getItem() { return this.item; }
+    public Node getNext() { return this.next; }
+    
+    public void setItem(int item) { this.item = item; }
+    public void setNext(Node next) { this.next = next; }
+}
+
+class SLinkedList
+{
+    private Node head;
+    
+    SLinkedList(Node head)
+    {
+        this.head = head;
+    }
+    
+    public Node getHead() { return this.head; }
+    
+    public void setHead(Node head) { this.head = head; }
+    
+    /*
+    LOW LEVEL PSEUDOCODE
+    assign current 1 as list 1's head
+    assign current 2 as list 2's head
+    assign current of merge list as dummy head
+    while current 1 is not null and current 2 is not null
+        if current 1 is minimum between those
+            set next of current as current 1
+            assign current 1 as next of current 1
+        else
+            set next of current as current 2
+            assign current 2 as next of current 2
+        assign current as next of current
+    while current 1 is not null
+        set next of current as current 1
+        assign current 1 as next of current 1
+        assign current as next of current
+    while current 2 is not null
+        set next of current as current 2
+        assign current 2 as next of current 2
+        assign current as next of current
+    */
+    
+    public static SLinkedList merge2SLinkedList(SLinkedList list1, SLinkedList list2)
+    {
+        Node current1 = list1.getHead();
+        Node current2 = list2.getHead();
+        Node current = new Node(0, null); // utilize dummy head
+        SLinkedList mergeList = new SLinkedList(current); // create single linked list by dummy head
+        
+        while(current1 != null && current2 != null)
+        {
+            if(current1.getItem() < current2.getItem())
+            {
+                current.setNext(current1);
+                current1 = current1.getNext();
+            }
+            else
+            {
+                current.setNext(current2);
+                current2 = current2.getNext();
+            }
+            
+            current = current.getNext();
+        }
+        while(current1 != null)
+        {
+            current.setNext(current1);
+            current1 = current1.getNext();
+            current = current.getNext();
+        }
+        while(current2 != null)
+        {
+            current.setNext(current2);
+            current2 = current2.getNext();
+            current = current.getNext();
+        }
+        
+        return mergeList;
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {        
+        Node n5 = new Node(10, null);
+        Node n4 = new Node(9, n5);
+        Node n3 = new Node(7, n4);
+        Node n2 = new Node(5, n3);
+        Node n1 = new Node(1, n2);
+        
+        SLinkedList list1 = new SLinkedList(n1);
+        printSLinkedList(list1);
+        
+        Node a5 = new Node(13, null);
+        Node a4 = new Node(12, a5);
+        Node a3 = new Node(6, a4);
+        Node a2 = new Node(3, a3);
+        Node a1 = new Node(2, a2);
+        
+        SLinkedList list2 = new SLinkedList(a1);
+        printSLinkedList(list2);
+        
+        printSLinkedList(SLinkedList.merge2SLinkedList(list1, list2));
+    }
+    
+    public static void printSLinkedList(SLinkedList list)
+    {
+        Node current = list.getHead();
+    
+        while (current != null)
+        {
+            System.out.print(current.getItem());
+            
+            if (current.getNext() != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.getNext();
+        }
+    
+        System.out.println();
+    }
+}
