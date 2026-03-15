@@ -1,4 +1,20 @@
+/*
+Name and Surname: Arif Eren YILDIRIM
+Student ID: 10001521
+Section: 2
+*/
+
 import java.util.Scanner;
+
+/*
+I pursued Leetcode resembling logic while writing code.
+I constructed an array-based stack class i.e., FixedCapacityStackOfIntegers class that includes core definitions for a stack including isEmpty(), push(), and pop().
+And I added peek() functionality which is further included in built-in Stack class in Java.
+Essentially, I defined this class by considering course textbook and slides.
+I wanted to define it custom, becausei I wanted to uunderstand exactly what it is going on.
+Of course this problem is solvable by utilizing built-in Stack class in Java.
+Afterwards, I constructed solution class includes required functions and attributes to do job.
+*/
 
 class FixedCapacityStackOfIntegers
 {
@@ -31,6 +47,34 @@ class FixedCapacityStackOfIntegers
     }
 }
 
+/*
+HIGH LEVEL PSEUDOCODE
+pursue a 2-stack approach
+a stack is for fun scores and other stack is for minimum fun scores until or within that fragment of time
+*/
+
+/*
+LOW LEVEL PSEUDOCODE
+keep track of minimum at that instant of time -> a dummy value that is maximum possible integer in java is assigned initially to get rid of extra if conditions
+in case of adding operation
+	push relevant value to stack of fun scores
+	if value is less than or equal to current minimum
+		update minimum as this value and push this value to stack of minimum fun scores
+in case of deleting operation
+	if stack of fun scores is empty
+		print that it is empty on screen
+	else
+		pop stack of fun scores from top
+		if it is equal to top of stack of minimum fun scores
+			pop stack of minimum fun scores
+			update minimum as peek of final stack of minimum fun scores from top
+in case of minimum operation
+	if stack of fun scores is empty
+		print that it is empty on screen
+	else
+		print minimum
+*/
+
 class Solution
 {
     int minimum = Integer.MAX_VALUE; //assign a dummy value to get rid of extra conditions
@@ -61,7 +105,7 @@ class Solution
 	    	{
 	    		stackOfMinimumScores.pop();
 	    		
-	    		if(!stackOfMinimumScores.isEmpty())
+	    		if(!stackOfMinimumScores.isEmpty()) // after final pop there is a probability that stack of minimum fun scores is empty so peek() is meaningless
 	    		{
 	    			this.minimum = stackOfMinimumScores.peek();
 	    		}
