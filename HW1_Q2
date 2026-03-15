@@ -1,0 +1,120 @@
+import java.util.Scanner;
+
+class FixedCapacityStackOfIntegers
+{
+    private int[] i;
+    private int n = 0;
+    
+    FixedCapacityStackOfIntegers(int capacity)
+    {
+        i = new int[capacity];
+    }
+    
+    public boolean isEmpty()
+    {
+        return n == 0;
+    }
+    
+    public void push(int item)
+    {
+        i[n++] = item;
+    }
+    
+    public int pop()
+    {
+        return i[--n];
+    }
+    
+    public int peek()
+    {
+    	return i[n - 1];
+    }
+}
+
+class Solution
+{
+    int minimum = Integer.MAX_VALUE; //assign a dummy value to get rid of extra conditions
+    
+    public void question2Add(FixedCapacityStackOfIntegers stackOfFunScores, FixedCapacityStackOfIntegers stackOfMinimumScores, int value)
+    {
+        stackOfFunScores.push(value);
+        
+        if(value <= this.minimum)
+        {
+            this.minimum = value;
+            
+            stackOfMinimumScores.push(value);
+        }
+    }
+    
+    public void question2Del(FixedCapacityStackOfIntegers stackOfFunScores, FixedCapacityStackOfIntegers stackOfMinimumScores)
+    {
+    	if(stackOfFunScores.isEmpty())
+    	{
+    		System.out.println("Empty");
+    	}
+    	else
+    	{
+	    	int currentFunScore = stackOfFunScores.pop();
+	    	
+	    	if(currentFunScore == this.minimum)
+	    	{
+	    		stackOfMinimumScores.pop();
+	    		
+	    		if(!stackOfMinimumScores.isEmpty())
+	    		{
+	    			this.minimum = stackOfMinimumScores.peek();
+	    		}
+	    	}
+    	}
+    }
+    
+    public void question2Min(FixedCapacityStackOfIntegers stackOfFunScores)
+    {
+    	if(stackOfFunScores.isEmpty())
+    	{
+    		System.out.println("Empty");
+    	}
+    	else
+    	{
+    		System.out.println(this.minimum);
+    	}
+    }
+}
+
+public class HW1_Q2
+{
+	public static void main(String[] args)
+	{
+        Scanner scanner  = new Scanner(System.in);		
+		Solution solution = new Solution();
+        String stringOperationCount = scanner.nextLine();
+        int operationCount = Integer.parseInt(stringOperationCount);
+        
+        FixedCapacityStackOfIntegers stackOfFunScores = new FixedCapacityStackOfIntegers(operationCount);
+        FixedCapacityStackOfIntegers stackOfMinimumScores = new FixedCapacityStackOfIntegers(operationCount);
+        
+        for(int i = 0; i < operationCount; i++)
+        {
+        	String line = scanner.nextLine();
+        	String[] subparts = line.split(" ");
+        	
+        	if(subparts[0].equals("ADD"))
+        	{
+        		int value = Integer.parseInt(subparts[1]);
+        		solution.question2Add(stackOfFunScores, stackOfMinimumScores, value);
+        	}
+        	
+        	else if(subparts[0].equals("DEL"))
+        	{
+        		solution.question2Del(stackOfFunScores, stackOfMinimumScores);
+        	}
+        	else if(subparts[0].equals("MIN"))
+        	{
+        		solution.question2Min(stackOfFunScores);
+        	}
+        }
+        
+        scanner.close();
+	}
+}
