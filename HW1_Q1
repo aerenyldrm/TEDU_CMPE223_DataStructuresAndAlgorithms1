@@ -4,6 +4,8 @@ Student ID: 10001521
 Section: 2
 /*
 
+import java.util.Scanner;
+
 /*
 I pursued Leetcode resembling logic while writing code.
 I constructed Node class that includes single linked list definition i.e., node definition.
