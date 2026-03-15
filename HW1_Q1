@@ -1,0 +1,124 @@
+class Node
+{
+    int data;
+    Node next;
+    
+    Node(int data, Node next)
+    {
+        this.data = data;
+        this.next = next;
+    }
+}
+
+/*
+HIGH LEVEL PSEUDOCODE
+do none in case of odd numbers or non-adjacent even numbers
+in case of an even subpart with adjacent even numbers reverse it by logic of transferring next of current to sub-head of that subpart
+*/
+/*
+LOW LEVEL PSEUDOCODE
+keep track of current as head
+keep track of sub-head of partial even subparts -> assign a minimum integer initially -> to update sub-head of subparts
+keep track of recent odd or single even number that is not adjacent to an even number -> to connect recent non-transformed node to sub-head
+initialize counter to 0 -> if it is 0 and there are adjacent even numbers -> sub-head is assigned to initial point of even subpart
+while head is not null and next of head is not null and data of head is even and data of next of head is even
+    keep track head as next of head -> it is required to return correct head if linked initiates with even subparts with adjacent even numbers
+while current is not null
+    if next of current is not null and data of current is even and data of next of current is even -> this is case for even subparts by adjacency
+        if counter is 0
+            assign sub-head as current -> as current is initiation of even subparts with adjacency
+        initialize old next as next of current
+        set next of current as next of old next
+        set next of old next as sub-head
+        update sub-head as old next
+        set next of recent odd or single even as recent sub-head
+        increment counter by 1 -> to prevent condition about counter is 0 over and over
+    else i.e., odd number single even number that is not adjacent to an even number
+        keep track of recent odd or single even -> to connect it to sub-head of reverse even subparts
+        set next of current as current
+        set counter as 0 -> to understand this even subpart is finalized -> to provide condition about counter is 0 for upcoming even subpart 
+*/
+class Solution
+{
+    public Node question1(Node head)
+    {
+        Node current = head;
+        Node subHead = new Node(Integer.MIN_VALUE, null);
+        Node recentOddOrSingleEven = new Node(Integer.MIN_VALUE, null);
+        int counter = 0; // counter to detect initiation point of even subparts
+        
+        while(head != null && head.next != null && head.data % 2 == 0 && head.next.data % 2 == 0)
+        {
+            head = head.next; // if data of head of single linked list is even and pursued by even integers -> those construct even subparts -> so head transforms
+        }
+        
+        while(current != null)
+        {
+            if(current.next != null && current.data % 2 == 0 && current.next.data % 2 == 0)
+            {   
+                if(counter == 0)
+                {
+                    subHead = current; // head of partial even sequence
+                }
+                
+                Node oldNext = current.next;
+                current.next = oldNext.next;
+                oldNext.next = subHead;
+                subHead = oldNext;
+                recentOddOrSingleEven.next = subHead;
+                
+                counter++;
+            }
+            else
+            {
+                recentOddOrSingleEven = current;
+                
+                current = current.next;
+                
+                counter = 0;
+            }
+        }
+        
+        return head;
+    }
+}
+
+public class Main 
+{
+    public static void main()
+    {
+        Node n9 = new Node(12, null);
+        Node n8 = new Node(6, n9);
+        Node n7 = new Node(9, n8);
+        Node n6 = new Node(7, n7);
+        Node n5 = new Node(5, n6);
+        Node n4 = new Node(3, n5);
+        Node n3 = new Node(24, n4);
+        Node n2 = new Node(18, n3);
+        Node n1 = new Node(2, n2);
+        
+        printSLinkedList(n1);
+        
+        Solution solution = new Solution();
+        printSLinkedList(solution.question1(n1));
+    }
+    
+    public static void printSLinkedList(Node head)
+    {
+        Node current = head;
+    
+        while (current != null)
+        {
+            System.out.print(current.data);
+            
+            if (current.next != null)
+            {
+                System.out.print(" -> ");
+            }
+            
+            current = current.next;
+        }
+    
+        System.out.println();
+    }
+}
