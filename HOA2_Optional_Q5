@@ -1,0 +1,45 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+ /*
+ LOW LEVEL PSEUDOCODE
+ initialize nodes middle and end with head
+ initialize counter with odd integer
+ while end is not null
+    if counter is divisible by 2
+        set middle as next of middle
+    set end as next of end
+    increment counter by 1
+return middle
+ */
+class Solution
+{
+    public ListNode middleNode(ListNode head)
+    {
+        ListNode middle = head;
+        ListNode end = head;
+        int counter = 1;
+
+        while(end != null)
+        {
+            if(counter % 2 == 0)
+            {
+                middle = middle.next;
+            }
+
+            end = end.next;
+
+            counter++;
+        }
+
+        return middle;
+    }
+}
