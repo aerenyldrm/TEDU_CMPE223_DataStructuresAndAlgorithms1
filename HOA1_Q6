@@ -1,0 +1,53 @@
+class Solution
+{
+    int numbersLength;
+    int[] originalNumbers;
+    int[] numbersTransform;
+
+    public Solution(int[] nums)
+    {
+        numbersLength = nums.length;
+
+        originalNumbers = new int[numbersLength];
+        numbersTransform = new int[numbersLength];
+
+        for(int i = 0; i < numbersLength; i++)
+        {
+            originalNumbers[i] = nums[i];
+            numbersTransform[i] = nums[i];
+        }
+    }
+    
+    public int[] reset()
+    {
+        return originalNumbers;
+    }
+    
+    /*
+    HIGH LEVEL PSEUDOCODE
+    utilize replace logic within a for loop with single pass
+    cautious with equal probability so nextInt() utilized with 2 parameters origin and bound
+    */
+
+    public int[] shuffle()
+    {
+        Random random = new Random();
+
+        for(int i = 0; i < this.numbersLength; i++)
+        {
+            int replaceIndex = random.nextInt(i, this.numbersLength);
+            int temporary = numbersTransform[replaceIndex];
+            numbersTransform[replaceIndex] = numbersTransform[i];
+            numbersTransform[i] = temporary;
+        }
+
+        return numbersTransform;
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int[] param_1 = obj.reset();
+ * int[] param_2 = obj.shuffle();
+ */
