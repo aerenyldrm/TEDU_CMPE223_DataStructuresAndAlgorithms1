@@ -1,0 +1,59 @@
+package src;
+
+class Solution5
+{
+	public static void rearrange(String[] a)
+	{
+		int left = 0;
+		int right = a.length - 1;
+		
+		while(left < right)
+		{
+			while(left < right && isVowel(a[left].charAt(0)))
+			{
+				left++;
+			}
+			
+			while(left < right && !isVowel(a[right].charAt(0)))
+			{
+				right--;
+			}
+			
+			if(left < right)
+			{
+				String temporary = a[left];
+				
+				a[left] = a[right];
+				a[right] = temporary;
+				
+				left++;
+				right--;
+			}
+		}
+	}
+	
+	public static boolean isVowel(char a)
+	{
+		if(a == 'a' || a == 'e' || a == 'i' || a == 'o' || a == 'u')
+		{
+			return true;
+		}
+		
+		return false;
+	}
+}
+
+public class PracticeQuestion5
+{
+	public static void main(String[] args)
+	{
+		String[] a = {"a", "story", "has", "no", "beginning", "or", "end"};
+		
+		Solution5.rearrange(a);
+		
+		for(String s : a)
+		{
+			System.out.print(s + " ");
+		}
+	}
+}
