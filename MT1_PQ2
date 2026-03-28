@@ -1,0 +1,101 @@
+package src;
+
+class Node2
+{
+	int data;
+	Node2 next; 
+}
+
+class SLinkedList
+{
+	Node2 head;
+	
+	void skippify()
+	{
+		Node2 n = head;
+		
+		int incr = 1;
+		
+		while(n != null)
+		{
+			Node2 nextNode = n.next;
+			
+			for(int i = 0; i <= incr; i++)
+			{
+				if(i == incr || nextNode == null)
+				{
+					break;
+				}
+				
+				nextNode = nextNode.next;
+			}
+			
+			n.next = nextNode;
+			n = n.next;
+			incr++;
+		}
+	}
+}
+
+public class PracticeQuestion2
+{
+	public static void main(String[] args)
+	{
+	    SLinkedList l1 = new SLinkedList();
+	    l1.head = new Node2(); l1.head.data = 1;
+	    l1.head.next = new Node2(); l1.head.next.data = 2;
+	    l1.head.next.next = new Node2(); l1.head.next.next.data = 3;
+	    l1.head.next.next.next = new Node2(); l1.head.next.next.next.data = 4;
+	    l1.head.next.next.next.next = new Node2(); l1.head.next.next.next.next.data = 5;
+	    l1.head.next.next.next.next.next = new Node2(); l1.head.next.next.next.next.next.data = 6;
+	    l1.head.next.next.next.next.next.next = new Node2(); l1.head.next.next.next.next.next.next.data = 7;
+	    l1.head.next.next.next.next.next.next.next = new Node2(); l1.head.next.next.next.next.next.next.next.data = 8;
+	    l1.head.next.next.next.next.next.next.next.next = new Node2(); l1.head.next.next.next.next.next.next.next.next.data = 9;
+	    l1.head.next.next.next.next.next.next.next.next.next = new Node2(); l1.head.next.next.next.next.next.next.next.next.next.data = 10;
+
+	    SLinkedList l2 = new SLinkedList();
+	    l2.head = new Node2(); l2.head.data = 9;
+	    l2.head.next = new Node2(); l2.head.next.data = 8;
+	    l2.head.next.next = new Node2(); l2.head.next.next.data = 7;
+	    l2.head.next.next.next = new Node2(); l2.head.next.next.next.data = 6;
+	    l2.head.next.next.next.next = new Node2(); l2.head.next.next.next.next.data = 5;
+	    l2.head.next.next.next.next.next = new Node2(); l2.head.next.next.next.next.next.data = 4;
+	    l2.head.next.next.next.next.next.next = new Node2(); l2.head.next.next.next.next.next.next.data = 3;
+	    l2.head.next.next.next.next.next.next.next = new Node2(); l2.head.next.next.next.next.next.next.next.data = 2;
+	    l2.head.next.next.next.next.next.next.next.next = new Node2(); l2.head.next.next.next.next.next.next.next.next.data = 1;
+
+	    SLinkedList l3 = new SLinkedList();
+	    l3.head = new Node2(); l3.head.data = 1;
+	    l3.head.next = new Node2(); l3.head.next.data = 2;
+	    l3.head.next.next = new Node2(); l3.head.next.next.data = 3;
+	    l3.head.next.next.next = new Node2(); l3.head.next.next.next.data = 4;
+	    
+	    l1.skippify();
+	    Node2 cur1 = l1.head;
+	    while (cur1 != null)
+	    {
+	        System.out.print(cur1.data + " ");
+	        cur1 = cur1.next;
+	    }
+	    
+	    System.out.println();
+	    
+	    l2.skippify();
+	    Node2 cur2 = l2.head;
+	    while (cur2 != null)
+	    {
+	        System.out.print(cur2.data + " ");
+	        cur2 = cur2.next;
+	    }
+	    
+	    System.out.println();
+	    
+	    l3.skippify();
+	    Node2 cur3 = l3.head;
+	    while (cur3 != null)
+	    {
+	        System.out.print(cur3.data + " ");
+	        cur3 = cur3.next;
+	    }
+	}
+}
