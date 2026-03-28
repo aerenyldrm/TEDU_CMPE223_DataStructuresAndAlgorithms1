@@ -1,0 +1,72 @@
+package src;
+
+import java.util.Stack;
+
+// recall function call stack
+// recall notion of depth
+// recall deep framing visualisation
+// recall helper function
+
+class Solution3
+{
+    public static void insertAtBottom(Stack<Integer> st, int item)
+    {
+        if(st.isEmpty())
+        {
+            st.push(item);
+            
+            return;
+        }
+        
+        int top = st.pop();
+        
+        insertAtBottom(st, item); // insert item which is last top from reverseStack
+        
+        st.push(top); // push current top to stack
+    }
+    
+    public static void reverseStack(Stack<Integer> st)
+    {
+        if(st.isEmpty())
+        {
+            return;
+        }
+        
+        int top = st.pop(); // top of stack that is updated during recursion is getting deep
+        
+        reverseStack(st);
+        
+        insertAtBottom(st, top);
+    }
+}
+
+public class PracticeQuestion3
+{
+	public static void main(String[] args)
+	{
+		Stack<Integer> stack = new Stack<>();
+		
+		stack.push(1);
+		stack.push(2);
+		stack.push(3);
+		
+		printStack(stack);
+		
+		Solution3.reverseStack(stack);	
+		
+		printStack(stack);
+	}
+	
+	public static void printStack(Stack<Integer> st)
+	{
+	    System.out.print("Stack (bottom -> top): ");
+	    
+	    for(int val : st)
+	    {
+	        System.out.print(val + " ");
+	    }
+	    
+	    System.out.println();
+	}
+
+}
