@@ -1,0 +1,75 @@
+package src;
+
+class Node8
+{
+	int data;
+	Node8 prev;
+	Node8 next;
+}
+
+class Solution8
+{
+	public static Node8 insertionSort(Node8 head)
+	{
+		Node8 currentI = head.next;
+		
+		while(currentI != null)
+		{
+			Node8 currentJ = currentI;
+			
+			while(currentJ.prev != null && currentJ.data < currentJ.prev.data)
+			{
+				int temporary = currentJ.data;
+				
+				currentJ.data = currentJ.prev.data;
+				currentJ.prev.data = temporary;
+				
+				currentJ = currentJ.prev;
+			}
+			
+			currentI = currentI.next;
+		}
+		
+		return head;
+	}
+}
+
+public class PracticeQuestion8
+{
+	public static void main(String[] args)
+	{
+	    Node8 n1 = new Node8(); n1.data = 4;
+	    Node8 n2 = new Node8(); n2.data = 2;
+	    Node8 n3 = new Node8(); n3.data = 3;
+	    Node8 n4 = new Node8(); n4.data = 1;
+	    n1.next = n2; n2.prev = n1;
+	    n2.next = n3; n3.prev = n2;
+	    n3.next = n4; n4.prev = n3;
+
+	    Node8 m1 = new Node8(); m1.data = 1;
+	    Node8 m2 = new Node8(); m2.data = 2;
+	    Node8 m3 = new Node8(); m3.data = 3;
+	    m1.next = m2; m2.prev = m1;
+	    m2.next = m3; m3.prev = m2;
+
+	    Node8 a1 = new Node8(); a1.data = 5;
+	    Node8 a2 = new Node8(); a2.data = 4;
+	    Node8 a3 = new Node8(); a3.data = 3;
+	    Node8 a4 = new Node8(); a4.data = 2;
+	    Node8 a5 = new Node8(); a5.data = 1;
+	    a1.next = a2; a2.prev = a1;
+	    a2.next = a3; a3.prev = a2;
+	    a3.next = a4; a4.prev = a3;
+	    a4.next = a5; a5.prev = a4;
+	    
+	    Solution8.insertionSort(n1);
+	    
+	    Node8 cur = n1;
+	    while(cur != null)
+	    {
+	        System.out.print(cur.data + " ");
+	        cur = cur.next;
+	    }
+	    System.out.println();
+	}
+}
