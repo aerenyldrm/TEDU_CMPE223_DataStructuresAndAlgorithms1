@@ -1,0 +1,107 @@
+package src;
+
+class Node4
+{
+	int data;
+	Node4 next; 
+}
+
+class Solution4
+{
+	public static void teduDelete(int x, int y, Node4 head) // remove y nodes in every x nodes
+	{
+		int counterX = x;
+		int counterY = y;
+		
+		Node4 current = head;
+		
+		while(current != null)
+		{
+			Node4 nextNode = current.next;
+			
+			if(counterX == 1)
+			{
+				while(counterY > 0 && nextNode != null)
+				{
+					nextNode = nextNode.next;
+					counterY--;
+				}
+				
+				counterX = x;
+				counterY = y;
+			}
+			else
+			{
+				counterX--;
+			}
+			
+			current.next = nextNode;
+			
+			current = nextNode;
+		}
+	}
+}
+
+public class PracticeQuestion4
+{
+	public static void main(String[] args)
+	{
+	    Node4 n1 = new Node4(); n1.data = 7;
+	    Node4 n2 = new Node4(); n2.data = 9;
+	    Node4 n3 = new Node4(); n3.data = 1;
+	    Node4 n4 = new Node4(); n4.data = 4;
+	    Node4 n5 = new Node4(); n5.data = 10;
+	    Node4 n6 = new Node4(); n6.data = 5;
+	    Node4 n7 = new Node4(); n7.data = 3;
+	    Node4 n8 = new Node4(); n8.data = 21;
+	    Node4 n9 = new Node4(); n9.data = 17;
+	    Node4 n10 = new Node4(); n10.data = 15;
+	    n1.next=n2;
+	    n2.next=n3;
+	    n3.next=n4;
+	    n4.next=n5;
+	    n5.next=n6;
+	    n6.next=n7;
+	    n7.next=n8;
+	    n8.next=n9;
+	    n9.next=n10;
+
+	    Node4 m1 = new Node4(); m1.data = 4;
+	    Node4 m2 = new Node4(); m2.data = 2;
+	    Node4 m3 = new Node4(); m3.data = 8;
+	    Node4 m4 = new Node4(); m4.data = 6;
+	    Node4 m5 = new Node4(); m5.data = 3;
+	    Node4 m6 = new Node4(); m6.data = 5;
+	    Node4 m7 = new Node4(); m7.data = 1;
+	    Node4 m8 = new Node4(); m8.data = 13;
+	    Node4 m9 = new Node4(); m9.data = 17;
+	    m1.next=m2;
+	    m2.next=m3;
+	    m3.next=m4;
+	    m4.next=m5;
+	    m5.next=m6;
+	    m6.next=m7;
+	    m7.next=m8;
+	    m8.next=m9;
+	    
+	    Solution4.teduDelete(3, 2, n1);
+	    
+	    Node4 cur1 = n1;
+	    while(cur1 != null)
+	    {
+	        System.out.print(cur1.data + " ");
+	        cur1 = cur1.next;
+	    }
+	    
+	    System.out.println();
+	    
+	    Solution4.teduDelete(4, 1, m1);
+	    
+	    Node4 cur2 = m1;
+	    while(cur2 != null)
+	    {
+	        System.out.print(cur2.data + " ");
+	        cur2 = cur2.next;
+	    }
+	}
+}
