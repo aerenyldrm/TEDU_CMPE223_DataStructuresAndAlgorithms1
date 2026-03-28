@@ -1,0 +1,74 @@
+package src;
+
+/*
+PSEUDOCODE
+Utilise stack to keep track validity.
+Initialise counter variable to keep track whether there exists unnecessary parenthesis or not.
+Initialise boolean incrementCounterOrNot to keep track whether is it possible to increase counter or not.
+Concept is; if counter is negative, then return true.
+*/
+
+import java.util.Stack;
+
+class Solution1
+{
+	public static boolean containsDoubleParanths(String s)
+	{
+		Stack<Character> stack = new Stack<>();
+		
+		int counter = 0;
+		boolean incrementCounterOrNot = false;
+		
+		for(int i = 0; i < s.length(); i++)
+		{
+			if(s.charAt(i) == '(')
+			{
+				stack.push(s.charAt(i));
+				
+				incrementCounterOrNot = true;
+			}
+			else if(s.charAt(i) == ')')
+			{
+				stack.pop();
+				
+				counter--;
+				
+				incrementCounterOrNot = true;
+			}
+			else
+			{
+				if(incrementCounterOrNot == true)
+				{
+					counter++;
+					
+					incrementCounterOrNot = false;
+				}
+			}
+		}
+		
+		if(counter < 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+}
+
+public class PracticeQuestion1
+{
+	public static void main(String[] args)
+	{
+		String s1 = "((a+b)+((c+d)))";
+		String s2 = "(((a+(b)))+(c+d))";
+		String s3 = "(((a+(b))+c+d))";
+		String s4 = "((a+b)+(c+d))";
+		String s5 = "((a+(b))+(c+d))";
+		
+		System.out.println(Solution1.containsDoubleParanths(s1));
+		System.out.println(Solution1.containsDoubleParanths(s2));
+		System.out.println(Solution1.containsDoubleParanths(s3));
+		System.out.println(Solution1.containsDoubleParanths(s4));
+		System.out.println(Solution1.containsDoubleParanths(s5));
+	}
+}
