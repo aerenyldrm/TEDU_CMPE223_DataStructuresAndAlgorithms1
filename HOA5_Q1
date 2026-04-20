@@ -1,0 +1,85 @@
+/*
+PSEUDOCODE
+Descending merge sort algorithm.
+O(n log n).
+Recursion.
+Seperate function merge and mergeSort.
+Not in place, creating an array.
+Fundamental concept is that array is absolutely sorted if it includes 1 element.
+Then, just merge sorted array logic.
+*/
+
+class Merge
+{
+    public static Comparable[] merge(Comparable[] array1st, Comparable[] array2nd)
+    {
+        int length1st = array1st.length;
+        int length2nd = array2nd.length;
+
+        int lengthResult = length1st + length2nd;
+        
+        Comparable[] resultArray = new Comparable[lengthResult];
+
+        int i = 0, j = 0, k = 0;
+        
+        while(i < length1st && j < length2nd)
+        {
+            if(array1st[i].compareTo(array2nd[j]) > 0) resultArray[k++] = array1st[i++];
+            else if(array1st[i].compareTo(array2nd[j]) < 0) resultArray[k++] = array2nd[j++];
+            else resultArray[k++] = array1st[i++];
+        }
+
+        while(i < length1st) resultArray[k++] = array1st[i++]; // tackle remaining elements in array1st
+        while(j < length2nd) resultArray[k++] = array2nd[j++]; // tackle remaining elements in array2nd
+
+        for(Comparable comparable : resultArray)
+            System.out.print(comparable + " ");
+
+        System.out.println();
+
+        return resultArray;
+    }
+
+    public static Comparable[] mergeSort(Comparable[] theArray)
+    {
+        int length = theArray.length;
+
+        if(length == 1)
+        {
+            for(Comparable comparable : theArray)
+                System.out.print(comparable);
+
+            System.out.println();
+
+            return theArray;
+        }
+
+        int middle = length / 2;
+
+        Comparable[] array1st = new Comparable[middle];
+        Comparable[] array2nd = new Comparable[length - middle];
+
+        int k = 0;
+
+        for(int i = 0; i < middle; i++) array1st[i] = theArray[k++];
+        for(int j = 0; j < length - middle; j++) array2nd[j] = theArray[k++];
+
+        array1st = mergeSort(array1st);
+        array2nd = mergeSort(array2nd);
+
+        return merge(array1st, array2nd);
+    }
+}
+
+public class Q1
+{
+    public static void main(String[] args)
+    {
+        String string = "MERGESORTEXAMPLE";
+        char[] characterArray = string.toCharArray();
+        
+        Comparable[] comparableArray = { 4, 10, 9, 3, 14, 5, 11, 1, 8, 13, 6, 7, 2, 12 };
+        
+        Comparable[] mergeSortArray = Merge.mergeSort(comparableArray);
+    }
+}
