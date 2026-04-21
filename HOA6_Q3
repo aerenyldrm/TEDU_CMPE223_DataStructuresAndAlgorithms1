@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+class BinaryTree
+{
+    public Node root;
+    public int height;
+
+    public ArrayList<Integer> arrayList;
+
+    BinaryTree()
+    {
+        this.arrayList = new ArrayList<>();
+    }
+
+    public class Node
+    {
+        public int key;
+        public Node left;
+        public Node right;
+    }
+
+    public void postorderHeight(Node node)
+    {
+
+        if(node == null)
+        {
+            arrayList.add(this.height);
+
+            return;
+        }
+        else this.height++; // else increment height by 1
+
+        // recursive calls
+        postorderHeight(node.left);
+        postorderHeight(node.right);
+
+        // in a sense, it is just visiting node, but operations differ, for this, it is decrementing height by 1
+        this.height--;
+    }
+}
+
+public class Q1234
+{
+    public static void main(String[] args)
+    {
+        BinaryTree binaryTree = new BinaryTree();
+
+        binaryTree.root = binaryTree.new Node();
+        binaryTree.root.key = 60;
+        
+        binaryTree.root.left = binaryTree.new Node();
+        binaryTree.root.left.key = 20;
+
+        binaryTree.root.left.left = binaryTree.new Node();
+        binaryTree.root.left.left.key = 10;
+
+        binaryTree.root.left.right = binaryTree.new Node();
+        binaryTree.root.left.right.key = 40;
+
+        binaryTree.root.left.right.left = binaryTree.new Node();
+        binaryTree.root.left.right.left.key = 30;
+
+        binaryTree.root.left.right.right = binaryTree.new Node();
+        binaryTree.root.left.right.right.key = 50;
+
+        binaryTree.root.right = binaryTree.new Node();
+        binaryTree.root.right.key = 70;
+
+        binaryTree.postorderHeight(binaryTree.root);
+        System.out.println(Collections.max(binaryTree.arrayList));
+    }
+}
