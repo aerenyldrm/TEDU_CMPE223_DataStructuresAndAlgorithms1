@@ -40,7 +40,7 @@ class BinaryTree
     }
 }
 
-public class Q1234
+public class Q3
 {
     public static void main(String[] args)
     {
