@@ -32,8 +32,6 @@ public class Q2
         binaryTree.root = binaryTree.new Node();
         binaryTree.root.key = 60;
 
-        binaryTree.minimum = binaryTree.root.key;
-        
         binaryTree.root.left = binaryTree.new Node();
         binaryTree.root.left.key = 20;
 
