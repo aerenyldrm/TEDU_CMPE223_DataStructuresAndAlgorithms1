@@ -1,0 +1,56 @@
+class BinaryTree
+{
+    public Node root;
+    public int sum;
+
+    public class Node
+    {
+        public int key;
+        public Node left;
+        public Node right;
+    }
+
+    public void preorderSum(Node node)
+    {
+        if(node == null) return;
+
+        // in a sense, it is just visiting node, but operations differ, for this, it is decrementing height by 1
+        sum += node.key;
+
+        // recursive calls
+        preorderSum(node.left);
+        preorderSum(node.right);
+    }
+}
+
+public class Q4
+{
+    public static void main(String[] args)
+    {
+        BinaryTree binaryTree = new BinaryTree();
+
+        binaryTree.root = binaryTree.new Node();
+        binaryTree.root.key = 60;
+        
+        binaryTree.root.left = binaryTree.new Node();
+        binaryTree.root.left.key = 20;
+
+        binaryTree.root.left.left = binaryTree.new Node();
+        binaryTree.root.left.left.key = 10;
+
+        binaryTree.root.left.right = binaryTree.new Node();
+        binaryTree.root.left.right.key = 40;
+
+        binaryTree.root.left.right.left = binaryTree.new Node();
+        binaryTree.root.left.right.left.key = 30;
+
+        binaryTree.root.left.right.right = binaryTree.new Node();
+        binaryTree.root.left.right.right.key = 50;
+
+        binaryTree.root.right = binaryTree.new Node();
+        binaryTree.root.right.key = 70;
+
+        binaryTree.preorderSum(binaryTree.root);
+        System.out.println(binaryTree.sum);
+    }
+}
