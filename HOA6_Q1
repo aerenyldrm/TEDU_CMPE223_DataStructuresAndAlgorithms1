@@ -1,0 +1,58 @@
+class BinaryTree
+{
+    public Node root;
+    public int minimum;
+
+    public class Node
+    {
+        public int key;
+        public Node left;
+        public Node right;
+    }
+
+    public void preorderMinimum(Node node)
+    {
+        if(node == null) return; // base case
+
+        // in a sense, it is just visiting node, but operations differ, in this case it is detect minimum key
+        if(node.key < this.minimum) this.minimum = node.key;
+        
+        // recursive calls
+        preorderMinimum(node.left);
+        preorderMinimum(node.right);
+    }
+}
+
+public class Q1
+{
+    public static void main(String[] args)
+    {
+        BinaryTree binaryTree = new BinaryTree();
+
+        binaryTree.root = binaryTree.new Node();
+        binaryTree.root.key = 60;
+
+        binaryTree.minimum = binaryTree.root.key;
+        
+        binaryTree.root.left = binaryTree.new Node();
+        binaryTree.root.left.key = 20;
+
+        binaryTree.root.left.left = binaryTree.new Node();
+        binaryTree.root.left.left.key = 10;
+
+        binaryTree.root.left.right = binaryTree.new Node();
+        binaryTree.root.left.right.key = 40;
+
+        binaryTree.root.left.right.left = binaryTree.new Node();
+        binaryTree.root.left.right.left.key = 30;
+
+        binaryTree.root.left.right.right = binaryTree.new Node();
+        binaryTree.root.left.right.right.key = 50;
+
+        binaryTree.root.right = binaryTree.new Node();
+        binaryTree.root.right.key = 70;
+
+        binaryTree.preorderMinimum(binaryTree.root);
+        System.out.println(binaryTree.minimum);
+    }
+}
